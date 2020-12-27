@@ -15,7 +15,8 @@ module.exports = ({ config, db, router, cache, apiStatus, apiError, getRestApiCl
         client.addMethods('customerPrice', (restClient) => {
             const module = {};
             module.get = (customerId, token) => {
-                return restClient.get(`/kmk-customerprice/customerprice/search??searchCriteria%5BfilterGroups%5D%5B0%5D%5Bfilters%5D%5B0%5D%5Bfield%5D=customer_id&searchCriteria%5BfilterGroups%5D%5B0%5D%5Bfilters%5D%5B0%5D%5Bvalue%5D=${encodeURI(customerId)}`)
+                const url = `/kmk-customerprice/customerprice/search?searchCriteria%5BfilterGroups%5D%5B0%5D%5Bfilters%5D%5B0%5D%5Bfield%5D=customer_id&searchCriteria%5BfilterGroups%5D%5B0%5D%5Bfilters%5D%5B0%5D%5Bvalue%5D=${encodeURI(customerId)}`;
+                return restClient.get(url, token);
             };
 
             return module;
@@ -27,7 +28,7 @@ module.exports = ({ config, db, router, cache, apiStatus, apiError, getRestApiCl
     router.get('/:customerId', async (req, res) => {
         try {
             const {customerId} = req.params;
-            const {token, storeCode} = req.query;
+            const {token} = req.query;
             if (!customerId) { throw new Error(`Customer id is required`); }
 
             const client = createMage2RestClient();
@@ -50,7 +51,7 @@ module.exports = ({ config, db, router, cache, apiStatus, apiError, getRestApiCl
 
     return {
         domainName: '@grupakmk',
-        pluginName: 'customer-price',
+        pluginName: '/customer-price',
         route: 'customer-price',
         router
     };
