@@ -51,8 +51,8 @@ module.exports = ({ config, db, router, cache, apiStatus, apiError, getRestApiCl
 
     return {
         domainName: '@grupakmk',
-        pluginName: '/customer-price',
-        route: 'customer-price',
+        pluginName: 'customer-price',
+        route: '/customer-price',
         router
     };
 };
