@@ -1,5 +1,7 @@
-# Plugin template
-This repository is a template for VueStorefrontApi plugin.
+# Customer price plugin
+This plugin allows to fetch individual customer price.
+Price list is defined per customer and is used to decorate product
+data to calculate final product price.
 
 ## Entry point
 Entry point for plugin is a /src/index.js file. It contains a template function
