@@ -42,10 +42,20 @@ module.exports = ({ config, db, router, cache, apiStatus, apiError, getRestApiCl
                     }
                 })
                 .catch(err => {
-                    apiError(res, err.message || err || `Assortments not found`);
+                    apiError(res, err.message || err || `Customer price not found`);
                 })
         } catch (err) {
             apiError(res, { code: 401, errorMessage: err.message || err || 'Customer price error' });
+        }
+    });
+
+    router.post('/:customerId', async (req, res) => {
+        try {
+            const {customerId} = req.params;
+            await cache.getCacheInstance().invalidate(`customer-price-${customerId}`);
+            apiStatus(res, null, 200);
+        } catch (e) {
+            apiError(res, e.message || e || 'Error while invalidating');
         }
     });
 
